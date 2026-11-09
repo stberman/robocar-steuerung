@@ -8,6 +8,10 @@
 #pragma once
 #include <Arduino.h>
 
+#if !defined(ARDUINO_ARCH_ESP32)
+#error "Falsches Board! In der Arduino IDE unter Werkzeuge > Board > esp32 das Board 'ESP32 Dev Module' auswaehlen."
+#endif
+
 #define FW_VERSION_MAJOR 1
 #define FW_VERSION_MINOR 0
 
