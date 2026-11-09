@@ -96,12 +96,16 @@ static String customName;
 void settingsSetCustomName(const char* name) {
   customName = name ? name : "";
   customName.trim();
-  // Der Name muss ins Advertising-Paket passen (max. 31 Byte inkl. Kopf)
-  if (customName.length() > 20) customName = customName.substring(0, 20);
+  // Wer "RoboCar-" selbst mitschreibt, bekommt es nicht doppelt
+  if (customName.startsWith(BLE_NAME_PREFIX)) customName = customName.substring(strlen(BLE_NAME_PREFIX));
+  // Der Name muss ins Advertising-Paket passen (31 Byte inkl. Kopf:
+  // "RoboCar-" + 18 Zeichen = 26 Byte)
+  if (customName.length() > 18) customName = customName.substring(0, 18);
 }
 
 String deviceName() {
-  if (customName.length() > 0) return customName;
+  // "RoboCar-" steht immer vorne, daran filtert die App
+  if (customName.length() > 0) return String(BLE_NAME_PREFIX) + customName;
   char buf[20];
   if (settings.group >= 1 && settings.group <= 16) {
     snprintf(buf, sizeof(buf), "%s%02u", BLE_NAME_PREFIX, settings.group);

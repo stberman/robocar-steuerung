@@ -34,6 +34,6 @@ bool settingsFromBytes(const uint8_t* in, size_t len);
 // Fester Name aus der .ino (AUTO_NAME); leer = automatischer Name
 void settingsSetCustomName(const char* name);
 
-// Eigener Name (AUTO_NAME), sonst "RoboCar-07" bzw. "RoboCar-A3F1" (aus der MAC),
+// "RoboCar-" + eigener Name (AUTO_NAME), sonst "RoboCar-07" bzw. "RoboCar-A3F1" (aus der MAC),
 // wenn keine Gruppe gesetzt ist
 String deviceName();

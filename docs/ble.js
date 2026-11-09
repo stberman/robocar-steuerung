@@ -52,9 +52,8 @@ class CarLink {
   // Browser-Dialog zur Auswahl des Autos oeffnen und verbinden
   async connect() {
     const device = await navigator.bluetooth.requestDevice({
-      // "RoboCar-..." oder ein eigener Name (AUTO_NAME in der Firmware);
-      // eigene Namen werden ueber die Service-UUID gefunden.
-      filters: [{ namePrefix: RC_NAME_PREFIX }, { services: [RC_UUID.service] }],
+      // Nur Autos anzeigen: Ihr Name beginnt immer mit "RoboCar-"
+      filters: [{ namePrefix: RC_NAME_PREFIX }],
       optionalServices: [RC_UUID.service],
     });
     if (this.device && this.device !== device) this.disconnect();

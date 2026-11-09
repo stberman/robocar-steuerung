@@ -140,7 +140,8 @@ const Settings = {
     try {
       await this._write(this._collect(group));
       if (group !== this.loadedGroup) {
-        const eigenerName = car.name && !car.name.startsWith(RC_NAME_PREFIX);
+        // Mit eigenem Namen (AUTO_NAME) bleibt der Name, sonst RoboCar-<Gruppe>
+        const eigenerName = car.name && !/^RoboCar-(\d{2}|[0-9A-F]{4})$/.test(car.name);
         const neuerName = eigenerName ? car.name : `RoboCar-${String(group).padStart(2, '0')}`;
         this._msg(`Gespeichert. Das Auto startet neu und heißt danach ${neuerName}. Die App verbindet sich automatisch neu.`);
         this.loadedGroup = group;

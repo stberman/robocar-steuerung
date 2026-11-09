@@ -23,8 +23,9 @@
 // =================================================================
 //  Leer lassen ("") -> automatisch "RoboCar-07" (Gruppennummer aus der App)
 //                      bzw. "RoboCar-A3F1", solange keine Gruppe gesetzt ist.
-//  Eigener Name     -> z. B. "Blitz" oder "Team Turbo"
-//  Hoechstens 20 Zeichen, am besten ohne Umlaute. Jedes Auto im Raum
+//  Eigener Name     -> z. B. "Blitz" ergibt "RoboCar-Blitz"
+//  "RoboCar-" wird immer automatisch davorgesetzt (daran erkennt die App
+//  die Autos). Hoechstens 18 Zeichen, ohne Umlaute. Jedes Auto im Raum
 //  sollte einen anderen Namen haben!
 #define AUTO_NAME ""
 // =================================================================
