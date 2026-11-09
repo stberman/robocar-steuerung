@@ -1,0 +1,15 @@
+{
+  "name": "RoboCar Steuerung",
+  "short_name": "RoboCar",
+  "description": "Steuerung für das Projektwochen-Auto (TH Köln, Projekt Maschinenbau)",
+  "lang": "de",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#11151c",
+  "theme_color": "#11151c",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
