@@ -74,7 +74,7 @@ void loop() {
       failsafe = false;
       bleSetFailsafe(false);
     }
-    motorSetTarget(c.throttle, c.steer, c.buttons & BTN_BOOST);
+    motorSetTarget(c.throttle, c.steer, c.buttons & BTN_BOOST, c.buttons & BTN_PANZER);
 
     for (uint8_t i = 0; i < 4; i++) {
       if (!auxValid || c.aux[i] != lastAux[i]) {

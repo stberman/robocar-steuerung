@@ -107,7 +107,7 @@ Service `6e8a1000-5c3b-4b6e-9a2f-0c1d2e3f4a50`
 
 | Characteristic | UUID | Richtung | Inhalt |
 |---|---|---|---|
-| control | `6e8a1001-…` | App → Auto, Write without Response, 25 Hz | 9 Byte: `ver, seq, gas(int8 ±100), lenkung(int8 ±100), tasten(bit0 Boost, bit1 Identify), aux1..aux4 (0..255)` |
+| control | `6e8a1001-…` | App → Auto, Write without Response, 25 Hz | 9 Byte: `ver, seq, gas(int8 ±100), lenkung(int8 ±100), tasten(bit0 Boost, bit1 Identify, bit2 Panzer), aux1..aux4 (0..255)` |
 | config | `6e8a1002-…` | Read/Write | 8 Byte: `ver, gruppe(0..16), max%, boost%, trim(int8 ±50), flags(bit0 invA, bit1 invB, bit2 swap, bit3 invLenkung), lenk%, 0` |
 | status | `6e8a1003-…` | Auto → App, Notify bei jedem 5. Paket | 6 Byte: `fwMajor, fwMinor, letzte seq, flags(bit0 Failsafe, bit1 Gruppe gesetzt), gruppe, 0` |
 

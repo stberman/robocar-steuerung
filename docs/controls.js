@@ -218,6 +218,7 @@ const Controls = {
       lenk = this.links.x;
     }
     let buttons = this.boost ? RC_BTN.BOOST : 0;
+    if (this.modus === 'panzer') buttons |= RC_BTN.PANZER;
     const aux = this.aux.slice();
 
     // Optional: Gamecontroller am Handy (Bluetooth/USB). Er uebernimmt,
@@ -227,6 +228,7 @@ const Controls = {
       const dz = (v) => (Math.abs(v) < 0.12 ? 0 : v);
       gas = -dz(pad.axes[1] || 0);
       lenk = dz(pad.axes[0] || 0);
+      buttons &= ~RC_BTN.PANZER;   // Gamecontroller steuert immer wie ein Joystick
       if (pad.buttons[7] && pad.buttons[7].pressed) buttons |= RC_BTN.BOOST;  // rechter Trigger
       for (let i = 0; i < 4; i++) {                                           // A, B, X, Y
         if (pad.buttons[i] && pad.buttons[i].pressed) aux[i] = 255;

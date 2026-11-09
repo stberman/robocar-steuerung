@@ -71,6 +71,7 @@
 #define CONTROL_LEN 9
 #define BTN_BOOST    0x01
 #define BTN_IDENTIFY 0x02
+#define BTN_PANZER   0x04   // Panzer-Modus: Gas/Lenkung ohne Lenk-Empfindlichkeit auswerten
 
 // Konfiguration (App <-> Auto), 8 Byte, wird im Flash gespeichert
 //   [0] Protokollversion

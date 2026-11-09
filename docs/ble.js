@@ -18,7 +18,7 @@ const RC_UUID = {
 const RC_PROTOCOL_VERSION = 1;
 const RC_NAME_PREFIX = 'RoboCar-';
 const RC_SEND_INTERVAL_MS = 40;      // 25 Pakete pro Sekunde
-const RC_BTN = { BOOST: 0x01, IDENTIFY: 0x02 };
+const RC_BTN = { BOOST: 0x01, IDENTIFY: 0x02, PANZER: 0x04 };
 const RC_CFG = { INVERT_A: 0x01, INVERT_B: 0x02, SWAP_SIDES: 0x04, INVERT_STEER: 0x08 };
 
 class CarLink {

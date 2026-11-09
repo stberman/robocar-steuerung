@@ -50,17 +50,27 @@ static int toPwm(float v, float scale) {
   return v > 0 ? pwm : -pwm;
 }
 
-void motorSetTarget(int8_t throttle, int8_t steer, bool boost) {
+void motorSetTarget(int8_t throttle, int8_t steer, bool boost, bool panzer) {
   if (abs(throttle) < DEADZONE_PCT) throttle = 0;
   if (abs(steer) < DEADZONE_PCT) steer = 0;
   if (settings.flags & CFG_INVERT_STEER) steer = -steer;
 
   float t = throttle / 100.0f;
-  float s = (steer / 100.0f) * (settings.steerRate / 100.0f);
+  // Im Panzer-Modus kodiert die App linke/rechte Seite als Gas/Lenkung.
+  // Die Lenk-Empfindlichkeit darf dort nicht wirken, sonst laeuft die
+  // nicht angesteuerte Seite mit.
+  float s = steer / 100.0f;
+  if (!panzer) s *= settings.steerRate / 100.0f;
 
   // Differential-Antrieb: links = Gas + Lenkung, rechts = Gas - Lenkung
   float left = t + s;
   float right = t - s;
+
+  // Panzer-Modus: Deadzone je Seite (Rundungsreste aus der App ignorieren)
+  if (panzer) {
+    if (fabsf(left) < DEADZONE_PCT / 100.0f) left = 0;
+    if (fabsf(right) < DEADZONE_PCT / 100.0f) right = 0;
+  }
 
   // Normieren statt abschneiden: Das Verhaeltnis links/rechts bleibt erhalten,
   // dadurch lenkt das Auto auch bei Vollgas noch.

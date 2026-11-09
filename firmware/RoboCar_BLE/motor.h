@@ -8,7 +8,7 @@ void motorBegin();
 
 // Sollwerte setzen: throttle und steer jeweils -100..100, boost = Boost-Taste gedrueckt.
 // Die Motoren laufen mit Rampe in motorUpdate() auf diese Werte.
-void motorSetTarget(int8_t throttle, int8_t steer, bool boost);
+void motorSetTarget(int8_t throttle, int8_t steer, bool boost, bool panzer);
 
 // Alle 10 ms aufrufen (Rampe).
 void motorUpdate();
