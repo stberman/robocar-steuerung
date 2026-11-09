@@ -62,14 +62,32 @@ void motorSetTarget(int8_t throttle, int8_t steer, bool boost, bool panzer) {
   float s = steer / 100.0f;
   if (!panzer) s *= settings.steerRate / 100.0f;
 
-  // Differential-Antrieb: links = Gas + Lenkung, rechts = Gas - Lenkung
-  float left = t + s;
-  float right = t - s;
-
-  // Panzer-Modus: Deadzone je Seite (Rundungsreste aus der App ignorieren)
+  float left, right;
   if (panzer) {
+    // Panzer-Modus: links = Gas + Lenkung, rechts = Gas - Lenkung ergibt
+    // genau die beiden Seiten aus der App.
+    left = t + s;
+    right = t - s;
+    // Deadzone je Seite (Rundungsreste aus der App ignorieren)
     if (fabsf(left) < DEADZONE_PCT / 100.0f) left = 0;
     if (fabsf(right) < DEADZONE_PCT / 100.0f) right = 0;
+  } else {
+    // Kurvenfahrt: Ein Auto mit Panzerlenkung (4 feste Raeder) dreht erst,
+    // wenn die innere Seite DEUTLICH langsamer laeuft, weil die Raeder seitlich
+    // rutschen muessen. Daher: aussen = Gas, innen = Gas * (1 - 2*|Lenkung|).
+    //   Lenkung 25 % -> innen halbe Geschwindigkeit
+    //   Lenkung 50 % -> innen steht
+    //   Lenkung 100 % -> innen rueckwaerts (dreht auf der Stelle)
+    float a = fabsf(s);
+    float outer = t;
+    float inner = t * (1.0f - 2.0f * a);
+    // Ohne Gas auf der Stelle drehen; dieser Anteil wird mit mehr Gas kleiner.
+    float pivot = s * (1.0f - fabsf(t));
+    // Welche Seite innen ist, haengt von Lenkrichtung UND Fahrtrichtung ab
+    // (gleiche Logik wie beim Drehen auf der Stelle: links + Lenkung).
+    bool rechtsInnen = (s >= 0) == (t >= 0);
+    if (rechtsInnen) { left = outer + pivot; right = inner - pivot; }
+    else             { left = inner + pivot; right = outer - pivot; }
   }
 
   // Normieren statt abschneiden: Das Verhaeltnis links/rechts bleibt erhalten,
