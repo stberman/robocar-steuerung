@@ -6,13 +6,14 @@
  *
  *  NAME DES AUTOS (so erscheint es in der Bluetooth-Liste der App)
  *  ---------------------------------------------------------------
- *  Normalerweise heißt das Auto automatisch "RoboCar-07" (07 = eure
- *  Gruppennummer, die ihr in der App einstellt).
+ *  Bleiben die Anführungszeichen unten leer (""), heißt das Auto
+ *  automatisch "RoboCar-07" (07 = eure Gruppennummer, die ihr in der App
+ *  einstellt).
  *
  *  Ihr wollt einen eigenen Namen? Dann:
- *    1. Die beiden Schrägstriche // vor "#define AUTO_NAME" unten löschen.
- *    2. Zwischen die Anführungszeichen euren Namen schreiben.
- *    3. Programm hochladen (Pfeil-Taste oben links in der Arduino IDE).
+ *    1. Unten zwischen die Anführungszeichen euren Namen schreiben,
+ *       z. B. #define AUTO_NAME "Blitz"
+ *    2. Programm hochladen (Pfeil-Taste oben links in der Arduino IDE).
  *
  *  Regeln für den Namen:
  *    - "RoboCar-" wird automatisch davorgesetzt. Aus "Blitz" wird also
@@ -20,7 +21,7 @@
  *    - Höchstens 18 Zeichen, keine Umlaute (ä, ö, ü, ß).
  *    - Jedes Auto im Raum braucht einen anderen Namen!
  */
-// #define AUTO_NAME "Blitz"
+#define AUTO_NAME ""
 
 /*
  *  Was brauche ich zum Hochladen?
@@ -42,8 +43,8 @@
  *  Die Dateien mit .cpp enthalten, WIE die Funktionen arbeiten.
  */
 
-// Gibt es keinen eigenen Namen (Zeile oben auskommentiert), ist der Name leer.
-// Dann vergibt das Programm automatisch "RoboCar-<Gruppe>".
+// Sicherheitsnetz: Falls die AUTO_NAME-Zeile oben versehentlich gelöscht
+// wurde, ist der Name leer und das Programm vergibt "RoboCar-<Gruppe>".
 #ifndef AUTO_NAME
 #define AUTO_NAME ""
 #endif

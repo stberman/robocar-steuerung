@@ -27,7 +27,7 @@ Raspberry Pis, WLAN-Access-Point, MQTT-Broker und USB-Gamepads aus WS25/26 (`WS2
 Alle Autos bekommen dasselbe Programm. Nach dem ersten Start heißt das Auto `RoboCar-XXXX` (aus der MAC-Adresse).
 Die Gruppennummer wird in der App gesetzt (⚙ → Gruppe). Danach startet das Auto neu und heißt `RoboCar-07`.
 
-**Eigener Name:** Ganz oben in `RoboCar_BLE.ino` steht auskommentiert `// #define AUTO_NAME "Blitz"`. Wer die `//` entfernt und einen Namen einträgt (z. B. `"Blitz"`, max. 18 Zeichen, ohne Umlaute), sieht das Auto als `RoboCar-Blitz` in der Bluetooth-Liste. `RoboCar-` wird immer davorgesetzt, denn die App zeigt nur Geräte mit diesem Anfang an. Die Gruppennummer ändert den Namen dann nicht mehr. Leer lassen = automatischer Name.
+**Eigener Name:** Ganz oben in `RoboCar_BLE.ino` steht `#define AUTO_NAME ""`. Wer dort einen Namen einträgt (z. B. `"Blitz"`, max. 18 Zeichen, ohne Umlaute), sieht das Auto als `RoboCar-Blitz` in der Bluetooth-Liste. `RoboCar-` wird immer davorgesetzt, denn die App zeigt nur Geräte mit diesem Anfang an. Die Gruppennummer ändert den Namen dann nicht mehr. Leer lassen = automatischer Name.
 
 Serieller Monitor (115200 Baud) zeigt Verbindung, Failsafe, gespeicherte Einstellungen und AUX-Werte.
 
