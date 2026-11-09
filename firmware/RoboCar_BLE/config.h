@@ -13,7 +13,7 @@
 #endif
 
 #define FW_VERSION_MAJOR 1
-#define FW_VERSION_MINOR 0
+#define FW_VERSION_MINOR 1
 
 // ---------------------------------------------------------------
 // Pinbelegung (siehe Aufbauanleitung WS26/27, Kapitel ESP32)
@@ -41,9 +41,13 @@
 // ---------------------------------------------------------------
 #define PWM_FREQ_HZ     2000   // L298N schaltet langsam -> niedrige Frequenz
 #define PWM_RESOLUTION  8      // 0..255
-#define PWM_MIN_START   90     // darunter drehen die Getriebemotoren nicht an
-#define SLEW_PER_STEP   20     // max. PWM-Aenderung pro 10 ms (Anfahrrampe, schont den Akku)
-#define DEADZONE_PCT    5      // Joystick-Ausschlaege unter 5 % werden ignoriert
+// Die folgenden Werte sind nur STANDARDWERTE. Sie lassen sich in der App
+// unter ⚙ -> Kalibrieren einstellen und werden im Auto gespeichert.
+#define DEF_MIN_START_PCT  35  // Anlaufschwelle in % PWM (35 % = PWM 90); darunter drehen die Motoren nicht
+#define DEF_CURVE_FULL_PCT 50  // bei diesem Lenkausschlag steht die kurveninnere Seite
+#define DEF_RAMP_10MS      13  // Anfahrrampe 0 -> Vollgas in 10-ms-Schritten (13 = 130 ms), 0 = aus
+#define DEF_DEADZONE_PCT   5   // Joystick-Ausschlaege darunter werden ignoriert
+#define DEF_EXPO_PCT       0   // 0 = linear, 100 = sehr feinfuehlig um die Mitte
 
 // ---------------------------------------------------------------
 // Sicherheit
@@ -73,7 +77,8 @@
 #define BTN_IDENTIFY 0x02
 #define BTN_PANZER   0x04   // Panzer-Modus: Gas/Lenkung ohne Lenk-Empfindlichkeit auswerten
 
-// Konfiguration (App <-> Auto), 8 Byte, wird im Flash gespeichert
+// Konfiguration (App <-> Auto), 16 Byte, wird im Flash gespeichert
+// (Aeltere Apps senden nur Byte 0..7; die Kalibrierung bleibt dann unveraendert.)
 //   [0] Protokollversion
 //   [1] Gruppe 0..16 (0 = nicht gesetzt)
 //   [2] Max. Geschwindigkeit in %   (10..100)
@@ -82,7 +87,15 @@
 //   [5] Flags (siehe CFG_*)
 //   [6] Lenk-Empfindlichkeit in %   (20..100)
 //   [7] reserviert
-#define CONFIG_LEN 8
+//   --- Kalibrierung ---
+//   [8]  Anlaufschwelle in %            (0..60)
+//   [9]  Kurve: innen steht bei Lenkung %   (20..100)
+//   [10] Anfahrrampe in 10 ms           (0..50, 0 = aus)
+//   [11] Deadzone in %                  (0..20)
+//   [12] Expo in %                      (0..100)
+//   [13..15] reserviert
+#define CONFIG_LEN    16
+#define CONFIG_LEN_V1 8
 #define CFG_INVERT_A     0x01
 #define CFG_INVERT_B     0x02
 #define CFG_SWAP_SIDES   0x04

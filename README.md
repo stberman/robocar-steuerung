@@ -27,6 +27,8 @@ Raspberry Pis, WLAN-Access-Point, MQTT-Broker und USB-Gamepads aus WS25/26 (`WS2
 Alle Autos bekommen dasselbe Programm. Nach dem ersten Start heißt das Auto `RoboCar-XXXX` (aus der MAC-Adresse).
 Die Gruppennummer wird in der App gesetzt (⚙ → Gruppe). Danach startet das Auto neu und heißt `RoboCar-07`.
 
+**Eigener Name:** Ganz oben in `RoboCar_BLE.ino` steht `#define AUTO_NAME ""`. Wer dort einen Namen einträgt (z. B. `"Team Turbo"`, max. 20 Zeichen, ohne Umlaute), sieht das Auto unter diesem Namen in der Bluetooth-Liste. Die Gruppennummer ändert den Namen dann nicht mehr. Leer lassen = automatischer Name. Die App findet Autos mit eigenem Namen über die Service-UUID.
+
 Serieller Monitor (115200 Baud) zeigt Verbindung, Failsafe, gespeicherte Einstellungen und AUX-Werte.
 
 Kompiliert mit arduino-cli (`esp32:esp32:esp32`): 604 kB Flash (46 %), ohne Warnungen.
@@ -61,13 +63,26 @@ Die Adresse als **QR-Code** ausdrucken (Raum-Aushang, Anleitung).
 
 ### Einstellungen (⚙, werden im Auto gespeichert)
 
+**Reiter „Allgemein“** (übernehmen mit „Speichern“):
+
 | Einstellung | Wirkung |
 |---|---|
 | Gruppe 1–16 | Name `RoboCar-XX` (Neustart des Autos, App verbindet automatisch neu) |
 | Max. / Boost-Geschwindigkeit | Begrenzung der PWM in % |
 | Lenk-Empfindlichkeit | wie stark die Lenkung wirkt |
-| Trim | Geradeauslauf korrigieren |
 | Motoren A/B falsch herum, Seiten vertauscht, Lenkung umkehren | Verkabelungsfehler per Software beheben statt umzustecken |
+
+**Reiter „Kalibrieren“** (ab Firmware 1.1; Änderungen wirken sofort und werden automatisch gespeichert).
+Mit den Test-Tasten **Anlauf / Geradeaus / Leichte Kurve / Drehen** fährt das Auto, solange die Taste gedrückt ist.
+
+| Einstellung | Standard | Wirkung |
+|---|---|---|
+| Anlaufschwelle | 35 % | kleinste PWM, ab der die Motoren drehen. „Anlauf“ halten: beide Seiten sollen gerade so drehen |
+| Geradeauslauf (Trim) | 0 | „Geradeaus“ halten und so einstellen, dass das Auto nicht zieht |
+| Kurvenschärfe | 50 % | Lenkausschlag, bei dem die kurveninnere Seite steht. Kleiner = engere Kurven |
+| Feinfühligkeit (Expo) | 0 % | kleine Joystick-Ausschläge schwächer, Vollausschlag bleibt |
+| Totbereich | 5 % | Joystick-Ausschläge darunter werden ignoriert |
+| Anfahrrampe | 130 ms | Zeit von 0 auf Vollgas, 0 = aus |
 
 ## 4. Sicherheit
 
@@ -108,7 +123,7 @@ Service `6e8a1000-5c3b-4b6e-9a2f-0c1d2e3f4a50`
 | Characteristic | UUID | Richtung | Inhalt |
 |---|---|---|---|
 | control | `6e8a1001-…` | App → Auto, Write without Response, 25 Hz | 9 Byte: `ver, seq, gas(int8 ±100), lenkung(int8 ±100), tasten(bit0 Boost, bit1 Identify, bit2 Panzer), aux1..aux4 (0..255)` |
-| config | `6e8a1002-…` | Read/Write | 8 Byte: `ver, gruppe(0..16), max%, boost%, trim(int8 ±50), flags(bit0 invA, bit1 invB, bit2 swap, bit3 invLenkung), lenk%, 0` |
+| config | `6e8a1002-…` | Read/Write | 16 Byte: `ver, gruppe(0..16), max%, boost%, trim(int8 ±50), flags(bit0 invA, bit1 invB, bit2 swap, bit3 invLenkung), lenk%, 0, anlauf%(0..60), kurve%(20..100), rampe(×10 ms, 0..50), totbereich%(0..20), expo%(0..100), 0, 0, 0`. Ältere Apps schreiben nur die ersten 8 Byte, die Kalibrierung bleibt dann unverändert |
 | status | `6e8a1003-…` | Auto → App, Notify bei jedem 5. Paket | 6 Byte: `fwMajor, fwMinor, letzte seq, flags(bit0 Failsafe, bit1 Gruppe gesetzt), gruppe, 0` |
 
 Protokollversion = 1. Die App misst die Latenz über das `seq`-Echo im Status (Anzeige oben, in ms).

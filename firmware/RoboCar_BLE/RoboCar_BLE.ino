@@ -17,6 +17,18 @@
  *   settings.*    gespeicherte Einstellungen
  *   aux_user.cpp  EIGENE ERWEITERUNGEN (fuer die Studierenden)
  */
+
+// =================================================================
+//  NAME DES AUTOS (so erscheint es in der Bluetooth-Liste der App)
+// =================================================================
+//  Leer lassen ("") -> automatisch "RoboCar-07" (Gruppennummer aus der App)
+//                      bzw. "RoboCar-A3F1", solange keine Gruppe gesetzt ist.
+//  Eigener Name     -> z. B. "Blitz" oder "Team Turbo"
+//  Hoechstens 20 Zeichen, am besten ohne Umlaute. Jedes Auto im Raum
+//  sollte einen anderen Namen haben!
+#define AUTO_NAME ""
+// =================================================================
+
 #include "config.h"
 #include "settings.h"
 #include "motor.h"
@@ -43,6 +55,7 @@ void setup() {
 
   motorBegin();          // zuerst: Motoren sicher aus
   settingsLoad();
+  settingsSetCustomName(AUTO_NAME);
   userSetup();
   bleBegin();
 

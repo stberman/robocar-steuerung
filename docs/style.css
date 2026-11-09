@@ -233,3 +233,19 @@ fieldset input { width: 20px; height: 20px; accent-color: var(--accent); }
   body[data-modus="joystick"] .pad { grid-template-columns: 1fr !important; }
   .center { grid-column: 1 / -1; grid-row: 2; }
 }
+
+/* ---------------- Reiter + Kalibrieren ---------------- */
+.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); margin: 8px 0 12px; }
+.tab {
+  padding: 8px 14px;
+  background: none;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  color: var(--muted);
+  font-weight: 600;
+}
+.tab[aria-selected="true"] { color: var(--text); border-bottom-color: var(--accent); }
+.grid label small { display: block; color: var(--muted); font-size: .8rem; font-weight: normal; margin-top: 2px; max-width: 260px; }
+.test-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.test-btn { touch-action: none; -webkit-user-select: none; user-select: none; }
+.test-btn.on { background: var(--accent); color: #1a0d00; }

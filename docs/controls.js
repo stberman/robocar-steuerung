@@ -118,6 +118,7 @@ const Controls = {
   rechts: null,
   boost: false,
   aux: [0, 0, 0, 0],
+  test: null,   // { gas, lenk } waehrend einer Testfahrt im Reiter "Kalibrieren"
 
   init() {
     this.links = new Stick(document.getElementById('zone-left'), 'xy');
@@ -181,6 +182,7 @@ const Controls = {
     this.links.reset();
     this.rechts.reset();
     this.boost = false;
+    this.test = null;
     document.querySelectorAll('.hold').forEach((b) => b.classList.remove('on'));
     AUX_KANAELE.forEach((k, i) => { if (k && k.art === 'taster') this.aux[i] = 0; });
   },
@@ -205,7 +207,11 @@ const Controls = {
   // Laeuft mit der Bildwiederholrate: Bedienelemente -> car.state
   _frame() {
     let gas, lenk;
-    if (this.modus === 'panzer') {
+    if (this.test) {
+      // Testfahrt aus dem Reiter "Kalibrieren" (settings.js)
+      gas = this.test.gas;
+      lenk = this.test.lenk;
+    } else if (this.modus === 'panzer') {
       // linke/rechte Seite in Gas + Lenkung umrechnen
       const l = this.links.y, r = this.rechts.y;
       gas = (l + r) / 2;
@@ -218,13 +224,13 @@ const Controls = {
       lenk = this.links.x;
     }
     let buttons = this.boost ? RC_BTN.BOOST : 0;
-    if (this.modus === 'panzer') buttons |= RC_BTN.PANZER;
+    if (this.modus === 'panzer' && !this.test) buttons |= RC_BTN.PANZER;
     const aux = this.aux.slice();
 
     // Optional: Gamecontroller am Handy (Bluetooth/USB). Er uebernimmt,
     // sobald er bewegt wird und der Touchscreen nicht benutzt wird.
     const pad = this._gamepad();
-    if (pad && gas === 0 && lenk === 0) {
+    if (pad && !this.test && gas === 0 && lenk === 0) {
       const dz = (v) => (Math.abs(v) < 0.12 ? 0 : v);
       gas = -dz(pad.axes[1] || 0);
       lenk = dz(pad.axes[0] || 0);

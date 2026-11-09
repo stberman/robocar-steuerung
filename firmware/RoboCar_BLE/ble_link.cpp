@@ -90,6 +90,9 @@ class ConfigCallbacks : public NimBLECharacteristicCallbacks {
       Serial.printf("Einstellungen gespeichert: Gruppe %u, Max %u%%, Boost %u%%, Trim %d, Flags 0x%02X, Lenkung %u%%\n",
                     settings.group, settings.maxSpeed, settings.boostSpeed, settings.trim,
                     settings.flags, settings.steerRate);
+      Serial.printf("  Kalibrierung: Anlauf %u%%, Kurve %u%%, Rampe %u ms, Deadzone %u%%, Expo %u%%\n",
+                    settings.minStart, settings.curveFull, settings.ramp * 10,
+                    settings.deadzone, settings.expo);
       if (settings.group != oldGroup) restartRequested = true;
     }
     // Immer den tatsaechlich gespeicherten (ggf. begrenzten) Stand zuruecklesen lassen

@@ -41,46 +41,58 @@ void motorBegin() {
   motorStopNow();
 }
 
+// Anlaufschwelle als PWM-Wert (aus der Kalibrierung)
+static int minStartPwm() { return settings.minStart * 255 / 100; }
+
 // Wert -1..1 in PWM umrechnen; kleine Werte auf die Anlaufschwelle anheben
 static int toPwm(float v, float scale) {
   if (fabsf(v) < 0.001f) return 0;
+  int minPwm = minStartPwm();
   float mag = fabsf(v) * scale;                       // 0..1
-  int pwm = PWM_MIN_START + (int)(mag * (255 - PWM_MIN_START));
+  int pwm = minPwm + (int)(mag * (255 - minPwm));
   pwm = constrain(pwm, 0, 255);
   return v > 0 ? pwm : -pwm;
 }
 
+// Expo: kleine Ausschlaege feinfuehliger, Vollausschlag bleibt 100 %
+static float expo(float v) {
+  float e = settings.expo / 100.0f;
+  return (1.0f - e) * v + e * v * v * v;
+}
+
 void motorSetTarget(int8_t throttle, int8_t steer, bool boost, bool panzer) {
-  if (abs(throttle) < DEADZONE_PCT) throttle = 0;
-  if (abs(steer) < DEADZONE_PCT) steer = 0;
+  const float dz = settings.deadzone / 100.0f;
   if (settings.flags & CFG_INVERT_STEER) steer = -steer;
 
   float t = throttle / 100.0f;
-  // Im Panzer-Modus kodiert die App linke/rechte Seite als Gas/Lenkung.
-  // Die Lenk-Empfindlichkeit darf dort nicht wirken, sonst laeuft die
-  // nicht angesteuerte Seite mit.
   float s = steer / 100.0f;
-  if (!panzer) s *= settings.steerRate / 100.0f;
-
   float left, right;
+
   if (panzer) {
-    // Panzer-Modus: links = Gas + Lenkung, rechts = Gas - Lenkung ergibt
-    // genau die beiden Seiten aus der App.
+    // Panzer-Modus: Die App kodiert linke/rechte Seite als Gas/Lenkung.
+    // links = Gas + Lenkung, rechts = Gas - Lenkung ergibt genau die beiden
+    // Seiten. Die Lenk-Empfindlichkeit wirkt hier nicht, sonst laeuft die
+    // nicht angesteuerte Seite mit.
     left = t + s;
     right = t - s;
-    // Deadzone je Seite (Rundungsreste aus der App ignorieren)
-    if (fabsf(left) < DEADZONE_PCT / 100.0f) left = 0;
-    if (fabsf(right) < DEADZONE_PCT / 100.0f) right = 0;
+    // Deadzone je Seite (auch Rundungsreste aus der App ignorieren)
+    left  = fabsf(left)  < dz ? 0 : expo(constrain(left, -1.0f, 1.0f));
+    right = fabsf(right) < dz ? 0 : expo(constrain(right, -1.0f, 1.0f));
   } else {
+    if (fabsf(t) < dz) t = 0;
+    if (fabsf(s) < dz) s = 0;
+    t = expo(t);
+    s = expo(s) * (settings.steerRate / 100.0f);
+
     // Kurvenfahrt: Ein Auto mit Panzerlenkung (4 feste Raeder) dreht erst,
     // wenn die innere Seite DEUTLICH langsamer laeuft, weil die Raeder seitlich
-    // rutschen muessen. Daher: aussen = Gas, innen = Gas * (1 - 2*|Lenkung|).
-    //   Lenkung 25 % -> innen halbe Geschwindigkeit
-    //   Lenkung 50 % -> innen steht
-    //   Lenkung 100 % -> innen rueckwaerts (dreht auf der Stelle)
+    // rutschen muessen. Daher: aussen = Gas, innen wird abgebremst.
+    // "Kurve" (curveFull) = Lenkausschlag, bei dem die innere Seite steht.
+    // Beim doppelten Ausschlag dreht sie mit voller Geschwindigkeit rueckwaerts.
+    float cf = settings.curveFull / 100.0f;
     float a = fabsf(s);
     float outer = t;
-    float inner = t * (1.0f - 2.0f * a);
+    float inner = t * max(-1.0f, 1.0f - a / cf);
     // Ohne Gas auf der Stelle drehen; dieser Anteil wird mit mehr Gas kleiner.
     float pivot = s * (1.0f - fabsf(t));
     // Welche Seite innen ist, haengt von Lenkrichtung UND Fahrtrichtung ab
@@ -113,9 +125,12 @@ static int stepTowards(int cur, int target) {
   if (cur != 0 && (target == 0 || (target > 0) != (cur > 0))) return 0;
   // Langsamer werden: sofort
   if (abs(target) <= abs(cur)) return target;
+  // Rampe aus: sofort auf den Sollwert
+  if (settings.ramp == 0) return target;
   // Beschleunigen: in Schritten, beim Anfahren direkt ab der Anlaufschwelle
+  int step = (255 + settings.ramp - 1) / settings.ramp;   // PWM pro 10 ms
   int dir = target > 0 ? 1 : -1;
-  int mag = max(abs(cur) + SLEW_PER_STEP, PWM_MIN_START);
+  int mag = max(abs(cur) + step, minStartPwm());
   return dir * min(mag, abs(target));
 }
 

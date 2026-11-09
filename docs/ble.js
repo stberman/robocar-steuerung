@@ -52,7 +52,9 @@ class CarLink {
   // Browser-Dialog zur Auswahl des Autos oeffnen und verbinden
   async connect() {
     const device = await navigator.bluetooth.requestDevice({
-      filters: [{ namePrefix: RC_NAME_PREFIX }],
+      // "RoboCar-..." oder ein eigener Name (AUTO_NAME in der Firmware);
+      // eigene Namen werden ueber die Service-UUID gefunden.
+      filters: [{ namePrefix: RC_NAME_PREFIX }, { services: [RC_UUID.service] }],
       optionalServices: [RC_UUID.service],
     });
     if (this.device && this.device !== device) this.disconnect();
@@ -93,14 +95,28 @@ class CarLink {
       swapSides: !!(dv.getUint8(5) & RC_CFG.SWAP_SIDES),
       invertSteer: !!(dv.getUint8(5) & RC_CFG.INVERT_STEER),
       steerRate: dv.getUint8(6),
+      // Kalibrierung gibt es erst ab Firmware 1.1 (16-Byte-Paket)
+      calib: dv.byteLength >= 16 ? {
+        minStart: dv.getUint8(8),
+        curveFull: dv.getUint8(9),
+        ramp: dv.getUint8(10),
+        deadzone: dv.getUint8(11),
+        expo: dv.getUint8(12),
+      } : null,
     };
   }
 
   async writeConfig(c) {
     const flags = (c.invertA ? RC_CFG.INVERT_A : 0) | (c.invertB ? RC_CFG.INVERT_B : 0) |
                   (c.swapSides ? RC_CFG.SWAP_SIDES : 0) | (c.invertSteer ? RC_CFG.INVERT_STEER : 0);
-    const buf = new Uint8Array([RC_PROTOCOL_VERSION, c.group, c.maxSpeed, c.boostSpeed,
-                                c.trim & 0xff, flags, c.steerRate, 0]);
+    const bytes = [RC_PROTOCOL_VERSION, c.group, c.maxSpeed, c.boostSpeed,
+                   c.trim & 0xff, flags, c.steerRate, 0];
+    // Aeltere Firmware kennt nur 8 Byte; dann die Kalibrierung weglassen
+    if (c.calib) {
+      const k = c.calib;
+      bytes.push(k.minStart, k.curveFull, k.ramp, k.deadzone, k.expo, 0, 0, 0);
+    }
+    const buf = new Uint8Array(bytes);
     await this._gatt(() => this._ch.config.writeValue(buf));
   }
 

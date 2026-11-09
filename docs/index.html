@@ -62,31 +62,72 @@
       <h2>Einstellungen</h2>
       <p class="hint">Werden im Auto gespeichert und gelten für jedes Handy.</p>
 
-      <div class="grid">
-        <label for="group">Gruppe (1–16)</label>
-        <input id="group" name="group" type="number" min="1" max="16" inputmode="numeric">
-
-        <label for="maxSpeed">Max. Geschwindigkeit</label>
-        <div class="range"><input id="maxSpeed" name="maxSpeed" type="range" min="10" max="100" data-unit=" %"><output for="maxSpeed"></output></div>
-
-        <label for="boostSpeed">Boost-Geschwindigkeit</label>
-        <div class="range"><input id="boostSpeed" name="boostSpeed" type="range" min="10" max="100" data-unit=" %"><output for="boostSpeed"></output></div>
-
-        <label for="steerRate">Lenk-Empfindlichkeit</label>
-        <div class="range"><input id="steerRate" name="steerRate" type="range" min="20" max="100" data-unit=" %"><output for="steerRate"></output></div>
-
-        <label for="trim">Geradeauslauf (Trim)</label>
-        <div class="range"><input id="trim" name="trim" type="range" min="-50" max="50"><output for="trim"></output></div>
+      <div class="tabs" role="tablist">
+        <button type="button" class="tab" role="tab" data-tab="allgemein" aria-selected="true">Allgemein</button>
+        <button type="button" class="tab" role="tab" data-tab="kalib" aria-selected="false">Kalibrieren</button>
       </div>
-      <p class="hint">Trim: Zieht das Auto nach <b>rechts</b>, den Regler nach links schieben – und umgekehrt.</p>
 
-      <fieldset>
-        <legend>Verkabelung korrigieren</legend>
-        <label><input type="checkbox" name="invertA"> Motoren A drehen falsch herum</label>
-        <label><input type="checkbox" name="invertB"> Motoren B drehen falsch herum</label>
-        <label><input type="checkbox" name="swapSides"> Links und rechts vertauscht</label>
-        <label><input type="checkbox" name="invertSteer"> Lenkung umkehren</label>
-      </fieldset>
+      <!-- ---------- Reiter Allgemein ---------- -->
+      <div class="tab-panel" data-panel="allgemein">
+        <div class="grid">
+          <label for="group">Gruppe (1–16)</label>
+          <input id="group" name="group" type="number" min="1" max="16" inputmode="numeric">
+
+          <label for="maxSpeed">Max. Geschwindigkeit</label>
+          <div class="range"><input id="maxSpeed" name="maxSpeed" type="range" min="10" max="100" data-unit=" %"><output for="maxSpeed"></output></div>
+
+          <label for="boostSpeed">Boost-Geschwindigkeit</label>
+          <div class="range"><input id="boostSpeed" name="boostSpeed" type="range" min="10" max="100" data-unit=" %"><output for="boostSpeed"></output></div>
+
+          <label for="steerRate">Lenk-Empfindlichkeit</label>
+          <div class="range"><input id="steerRate" name="steerRate" type="range" min="20" max="100" data-unit=" %"><output for="steerRate"></output></div>
+        </div>
+
+        <fieldset>
+          <legend>Verkabelung korrigieren</legend>
+          <label><input type="checkbox" name="invertA"> Motoren A drehen falsch herum</label>
+          <label><input type="checkbox" name="invertB"> Motoren B drehen falsch herum</label>
+          <label><input type="checkbox" name="swapSides"> Links und rechts vertauscht</label>
+          <label><input type="checkbox" name="invertSteer"> Lenkung umkehren</label>
+        </fieldset>
+      </div>
+
+      <!-- ---------- Reiter Kalibrieren ---------- -->
+      <div class="tab-panel" data-panel="kalib" hidden>
+        <p id="kalib-old" class="note warn" hidden>Die Firmware auf diesem Auto ist zu alt für die Kalibrierung. Bitte vom MakerSpace-Team neu aufspielen lassen.</p>
+        <p class="hint">Änderungen wirken <b>sofort</b> und werden automatisch gespeichert. Mit den Test-Tasten fährt das Auto, solange die Taste gedrückt ist – vorher Platz schaffen oder das Auto aufbocken.</p>
+
+        <div class="test-row">
+          <button type="button" class="small test-btn" data-gas="anlauf" data-lenk="0" title="Langsamstes Vorwärts">Anlauf</button>
+          <button type="button" class="small test-btn" data-gas="60" data-lenk="0">Geradeaus</button>
+          <button type="button" class="small test-btn" data-gas="60" data-lenk="25">Leichte Kurve</button>
+          <button type="button" class="small test-btn" data-gas="0" data-lenk="60">Drehen</button>
+        </div>
+
+        <div class="grid">
+          <label for="minStart">Anlaufschwelle<small>Kleinste Motorleistung. „Anlauf“ halten: Beide Seiten sollen gerade so drehen.</small></label>
+          <div class="range"><input id="minStart" name="minStart" type="range" min="0" max="60" data-unit=" %" data-live><output for="minStart"></output></div>
+
+          <label for="trim">Geradeauslauf (Trim)<small>„Geradeaus“ halten. Zieht das Auto nach rechts → Regler nach links.</small></label>
+          <div class="range"><input id="trim" name="trim" type="range" min="-50" max="50" data-live><output for="trim"></output></div>
+
+          <label for="curveFull">Kurvenschärfe<small>Lenkausschlag, bei dem die innere Seite stehen bleibt. Kleiner = engere Kurven.</small></label>
+          <div class="range"><input id="curveFull" name="curveFull" type="range" min="20" max="100" data-unit=" %" data-live><output for="curveFull"></output></div>
+
+          <label for="expo">Feinfühligkeit (Expo)<small>Höher = kleine Joystick-Bewegungen wirken schwächer, Vollausschlag bleibt gleich.</small></label>
+          <div class="range"><input id="expo" name="expo" type="range" min="0" max="100" data-unit=" %" data-live><output for="expo"></output></div>
+
+          <label for="deadzone">Totbereich<small>Joystick-Ausschläge darunter werden ignoriert.</small></label>
+          <div class="range"><input id="deadzone" name="deadzone" type="range" min="0" max="20" data-unit=" %" data-live><output for="deadzone"></output></div>
+
+          <label for="ramp">Anfahrrampe<small>Zeit von 0 auf Vollgas. Schont den Akku, 0 = aus.</small></label>
+          <div class="range"><input id="ramp" name="ramp" type="range" min="0" max="50" data-scale="10" data-unit=" ms" data-live><output for="ramp"></output></div>
+        </div>
+
+        <div class="actions">
+          <button type="button" id="btn-kalib-default" class="small">Standardwerte</button>
+        </div>
+      </div>
 
       <p id="settings-msg" class="msg" role="status"></p>
 

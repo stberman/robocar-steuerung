@@ -3,7 +3,7 @@
  * Strategie "erst Netz, dann Cache": Aenderungen am Code sind sofort sichtbar,
  * ohne Netz wird die zuletzt geladene Version verwendet.
  */
-const CACHE = 'robocar-v2';
+const CACHE = 'robocar-v3';
 const FILES = ['./', 'index.html', 'style.css', 'ble.js', 'controls.js', 'settings.js', 'app.js',
                'manifest.json', 'icon.svg'];
 
