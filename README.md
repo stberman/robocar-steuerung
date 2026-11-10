@@ -1,4 +1,5 @@
 # RoboCar Steuerung per Handy (Bluetooth LE) – WS26/27
+**Entwicklungsnotizen** (Entscheidungen, Verlauf, offene Punkte): [ENTWICKLUNG.md](ENTWICKLUNG.md)
 
 **App:** https://stberman.github.io/robocar-steuerung/  ·  Demo ohne Auto: https://stberman.github.io/robocar-steuerung/?demo
 
