@@ -69,6 +69,7 @@ Stand: 10.11.2026 · Firmware 1.1 · App-Cache `robocar-v4`
 
 - **Repo:** https://github.com/stberman/robocar-steuerung, lokaler Klon `C:\Users\stber\Projects\robocar-steuerung`. Das Repo ist die führende Version.
   - Die App liegt in `docs/` und wird über GitHub Pages ausgeliefert: https://stberman.github.io/robocar-steuerung/ (Demo: `?demo`).
+- **Anleitungen für Studierende und Betreuer:** `WS26_27/Anleitung/LaTeX/` (siehe Abschnitt 7).
 - **Ablage-Kopie:** `WS26_27/Steuerung/` im Teams-/OneDrive-Ordner. Dort heißt `docs/` → `app/`. Nach Änderungen im Repo die Dateien dorthin kopieren.
 - **App-Updates:** `CACHE` in `docs/sw.js` hochzählen, sonst behalten installierte Apps die alte Version.
 - **Kompilieren ohne IDE:**
@@ -89,11 +90,25 @@ Stand: 10.11.2026 · Firmware 1.1 · App-Cache `robocar-v4`
   - Kapitel 5.2 mit der neuen Pinbelegung.
   - Abb. 8 durch den neuen Verkabelungsplan ersetzt. Quelle: `WS26_27/Anleitung/Verkabelungsplan/make_wiring.py` → SVG/PNG.
 - **Aushang mit QR-Code:** `WS26_27/Steuerung/Aushang_RoboCar_App_QR.pdf`.
+- **LaTeX-Anleitungen (10.11.2026):** `WS26_27/Anleitung/LaTeX/` (Teams-Ordner, nicht im Repo). Übersetzen mit MiKTeX `latexmk -lualatex`, Details in der README dort.
+  - `Anleitung_Studierende.pdf` (30 S.): App inkl. Kalibrieren, Arduino IDE, Flashen (inkl. BOOT-Taste, Erase Flash), C++-Crashkurs, `AUX_KANAELE` ändern (Laptop `?demo`/localhost, GitHub-Fork + Pages), Servo-Kicker in 4 Stufen, Pins, Fehlersuche, Spickzettel.
+  - `Doku_Betreuer.pdf` (10 S.): Architektur, Fahrlogik als Formeln, NVS, BLE-Protokoll, Flashen per arduino-cli/esptool, Massen-Flashen, Laptop-Vorbereitung.
+  - `code/kicker_automatik.cpp`, `code/servo_schieber.cpp`: komplette `aux_user.cpp`-Varianten, kompiliert ohne Warnungen.
+  - 14 Platzhalter für eigene Screenshots/Fotos (Arduino IDE, Handy-Auswahldialog, GitHub, Auto). Liste in der README dort.
+- **Machbarkeitsprüfung „Studierende ändern selbst“ (10.11.2026):**
+  - Servo (LEDC Kanal 2, Timer 1, 50 Hz) und Motoren (Kanal 0/1, Timer 0, 2 kHz) laufen nebeneinander. Mit beiden Beispielen eingeschaltet kompiliert.
+  - Upload aus der IDE (bzw. die vier Einzeldateien per esptool) lässt den NVS bei 0x9000 stehen. `merged.bin` ab 0x0 ist auf 4 MB aufgefüllt und **löscht** den NVS.
+  - `userLoop()` läuft auch im Failsafe. Bewegliche Teile deshalb in `onFailsafe()` sichern (in der Anleitung beschrieben).
+  - Gamecontroller-Tasten A/B/X/Y wirken auch bei Art `schalter` wie ein Taster (bekannte Eigenheit, nicht behoben).
+  - Auf dem DevKit V1 sind GPIO 16/17 als RX2/TX2 beschriftet (in der Anleitung hervorgehoben).
 
 ## 8. Offene Punkte
 
 - [ ] **Hardwaretests:** Checkliste in README Abschnitt 8 (Failsafe, 8 Autos gleichzeitig, Android + iPhone/Bluefy, Boot-Test). Alles bisher nur kompiliert und im Demo-Modus geprüft, **nicht** am echten Auto.
-- [ ] **Anleitung nachziehen:** Anleitung v4 und `Anleitung_Kapitel_Steuerung.md` kennen den Reiter „Kalibrieren“ und `AUTO_NAME` noch nicht. Trim steht dort noch unter ⚙ allgemein.
+- [ ] **Anleitung nachziehen:** Anleitung v4 und `Anleitung_Kapitel_Steuerung.md` kennen den Reiter „Kalibrieren“ und `AUTO_NAME` noch nicht. Trim steht dort noch unter ⚙ allgemein. Die neue LaTeX-Anleitung für Studierende deckt beides ab. Kapitel 7.1 der Word-Anleitung („an das MakerSpace-Team wenden“) passt nicht mehr, weil die Studierenden jetzt selbst flashen.
+- [ ] **Screenshots/Fotos für die LaTeX-Anleitung:** 14 Platzhalter, Liste in `WS26_27/Anleitung/LaTeX/README.md`.
+- [ ] **Servo am echten Auto:** Reicht VIN (Powerbank-USB) für den SG90, ohne dass der ESP32 beim Schuss neu startet?
+- [ ] **Laptops der Studierenden:** Installation (ESP32-Paket mehrere 100 MB) vorab als Aufgabe ausgeben oder USB-Stick vorbereiten. Fork + Pages einmal mit einem Test-Account durchspielen.
 - [ ] **Deckblatt der Anleitung:** steht noch auf „Ort, 26.11.2023“.
 - [ ] **Motoren und Treiber:**
   - Gemessen: bei 100 % ca. **9,6 V** an den Motoren. Der L298N verliert je nach Strom ca. 2–4 V.
