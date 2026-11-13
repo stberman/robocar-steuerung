@@ -5,7 +5,7 @@ oder laden Sie sie über das Download-Symbol rechts oben herunter.
 
 | Datei | Wofür? | Wann? |
 |---|---|---|
-| `1_Aufbauanleitung_Auto.pdf` | Das Auto zusammenbauen: Motoren, Motortreiber, ESP32, Kabel. Erste Fahrt mit der App. | Tag 1 |
+| `1_Aufbauanleitung_Auto.pdf` | Das Auto zusammenbauen: Motoren, Motortreiber, ESP32, Kabel. Kapitel 7: Firmware und Anleitungen von GitHub herunterladen. Erste Fahrt mit der App. | Tag 1 |
 | `2_Programm_anpassen_und_flashen.pdf` | **Firmware selbst aufspielen** (flashen) und das Programm ändern: Dateien besorgen, Arduino IDE einrichten, ESP32 flashen, C++-Grundlagen, eigene Tasten in der App, Servo-Kicker | sobald das Auto fährt |
 | `3_Aushang_App_QR-Code.pdf` | Kurzanleitung mit QR-Code zur App | zum Aufhängen |
 

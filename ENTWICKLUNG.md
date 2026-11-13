@@ -107,7 +107,8 @@ Stand: 10.11.2026 · Firmware 1.1 · App-Cache `robocar-v4`
   - LaTeX-Anleitungen auf das Layout der offiziellen TH-Köln-Vorlage umgestellt. Deckblatt: Modul „TRAIL – Projektwoche Maschinenbau“, Modulverantwortliche Prof. Dr. phil. Anja Richert, verantwortlich für die Projektwoche Prof. Dr. Jörg Luderich. Das Word-Deckblatt v4 hat dieselben Angaben.
   - 13 Screenshots mit Markierungen eingebaut. Die zwei geplanten Fotos vom Auto sind durch TikZ-Zeichnungen ersetzt: ESP32 mit EN/BOOT/LEDs/USB und eine Prinzipskizze des Kickers. Fotos sind damit nicht mehr nötig.
   - Neuer Ordner `anleitungen/` im Repo mit den drei PDFs für Studierende. Dieselben Dateien liegen im Teams-Ordner `WS26_27/Unterlagen_Studierende/`. Beide Stellen aktualisiert das Skript `WS26_27/Anleitung/anleitungen_verteilen.ps1`, danach hier committen.
-  - Word-Aufbauanleitung v4, Kap. 7.5: Der Satz „wenden Sie sich an das MakerSpace-Team“ ist ersetzt durch „selbst aufspielen, Firmware per ZIP von GitHub, Details in der Anleitung Kap. 2/4/5“.
+  - Word-Aufbauanleitung v4 hat ein neues **Kapitel 7 „Dateien besorgen“**, das dem LaTeX-Kapitel 2 entspricht: Tabelle „Was gibt es wo“, 5 Schritte zum ZIP-Download mit markierten Screenshots, Achtung und Tipp, Ordnertabelle, Verweis auf die Flash-Anleitung. „Steuerung per Handy-App“ ist dadurch Kapitel 8, die Verweise darauf sind angepasst. Eingefügt per Word-COM-Skript.
+  - Word-Aufbauanleitung v4, Kap. 8.5 (vorher 7.5): Der Satz „wenden Sie sich an das MakerSpace-Team“ ist ersetzt durch „selbst aufspielen, Firmware per ZIP von GitHub, Details in der Anleitung Kap. 2/4/5“.
 
 ## 8. Offene Punkte
 
