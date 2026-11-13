@@ -108,6 +108,11 @@ Stand: 10.11.2026 · Firmware 1.1 · App-Cache `robocar-v4`
   - 13 Screenshots mit Markierungen eingebaut. Die zwei geplanten Fotos vom Auto sind durch TikZ-Zeichnungen ersetzt: ESP32 mit EN/BOOT/LEDs/USB und eine Prinzipskizze des Kickers. Fotos sind damit nicht mehr nötig.
   - Neuer Ordner `anleitungen/` im Repo mit den drei PDFs für Studierende. Dieselben Dateien liegen im Teams-Ordner `WS26_27/Unterlagen_Studierende/`. Beide Stellen aktualisiert das Skript `WS26_27/Anleitung/anleitungen_verteilen.ps1`, danach hier committen.
   - Word-Aufbauanleitung v4 hat ein neues **Kapitel 7 „Dateien besorgen“**, das dem LaTeX-Kapitel 2 entspricht: Tabelle „Was gibt es wo“, 5 Schritte zum ZIP-Download mit markierten Screenshots, Achtung und Tipp, Ordnertabelle, Verweis auf die Flash-Anleitung. „Steuerung per Handy-App“ ist dadurch Kapitel 8, die Verweise darauf sind angepasst. Eingefügt per Word-COM-Skript.
+  - Word-Aufbauanleitung v4, Layout (13.11.2026): Jedes Kapitel beginnt auf neuer Seite, Tabellen werden nicht über Seiten getrennt, Adressen sind echte Links.
+    In Absätzen mit Adressen und Dateinamen ist die Silbentrennung aus. In `robocar-steuerung` steht ein geschützter Bindestrich (14 → 21 Seiten).
+    **Falle:** Bildunterschriften in Textfeldern bekommen im Abbildungsverzeichnis `HYPERLINK "file:///<Pfad>" \l` mit dem Pfad, unter dem gerade gespeichert wird.
+    Nach jedem Aktualisieren des Verzeichnisses den Dateiteil aus diesen Feldcodes entfernen, sonst zeigen die Links im PDF auf eine alte Arbeitskopie.
+  - LaTeX: Die Schreibmaschinenschrift trennt nicht mehr (`HyphenChar=None`). Lange Pfade brechen nach `\bs` um.
   - Word-Aufbauanleitung v4, Kap. 8.5 (vorher 7.5): Der Satz „wenden Sie sich an das MakerSpace-Team“ ist ersetzt durch „selbst aufspielen, Firmware per ZIP von GitHub, Details in der Anleitung Kap. 2/4/5“.
 
 ## 8. Offene Punkte
