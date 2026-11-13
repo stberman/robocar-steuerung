@@ -105,13 +105,17 @@ Stand: 10.11.2026 · Firmware 1.1 · App-Cache `robocar-v4`
   - Die Studierenden laden **alles als ZIP von GitHub** (Code ▸ Download ZIP, kein Konto nötig) und entpacken nach `C:\RoboCar`. Das erklärt Kapitel 2 der LaTeX-Anleitung ausführlich. Die PDF-Anleitung kommt über die Betreuenden bzw. ILIAS.
   - Neuer Ordner `beispiele/` mit den Lösungen zum Servo-Kapitel, damit sie in der ZIP sind. Er liegt bewusst **nicht** im Sketch-Ordner, weil die IDE sonst alle `.cpp` mitübersetzt (doppelte Funktionen). Die Dateien sind identisch mit `WS26_27/Anleitung/LaTeX/code/`.
   - LaTeX-Anleitungen auf das Layout der offiziellen TH-Köln-Vorlage umgestellt. Deckblatt: Modul „TRAIL – Projektwoche Maschinenbau“, Modulverantwortliche Prof. Dr. phil. Anja Richert, verantwortlich für die Projektwoche Prof. Dr. Jörg Luderich. Das Word-Deckblatt v4 hat dieselben Angaben.
-  - 13 Screenshots mit Markierungen eingebaut. Es fehlen nur noch zwei Fotos vom Auto.
+  - 13 Screenshots mit Markierungen eingebaut. Die zwei geplanten Fotos vom Auto sind durch TikZ-Zeichnungen ersetzt: ESP32 mit EN/BOOT/LEDs/USB und eine Prinzipskizze des Kickers. Fotos sind damit nicht mehr nötig.
+  - Neuer Ordner `anleitungen/` im Repo mit den drei PDFs für Studierende. Dieselben Dateien liegen im Teams-Ordner `WS26_27/Unterlagen_Studierende/`. Beide Stellen aktualisiert das Skript `WS26_27/Anleitung/anleitungen_verteilen.ps1`, danach hier committen.
+  - Word-Aufbauanleitung v4, Kap. 7.5: Der Satz „wenden Sie sich an das MakerSpace-Team“ ist ersetzt durch „selbst aufspielen, Firmware per ZIP von GitHub, Details in der Anleitung Kap. 2/4/5“.
 
 ## 8. Offene Punkte
 
 - [ ] **Hardwaretests:** Checkliste in README Abschnitt 8 (Failsafe, 8 Autos gleichzeitig, Android + iPhone/Bluefy, Boot-Test). Alles bisher nur kompiliert und im Demo-Modus geprüft, **nicht** am echten Auto.
 - [ ] **Anleitung nachziehen:** Anleitung v4 und `Anleitung_Kapitel_Steuerung.md` kennen den Reiter „Kalibrieren“ und `AUTO_NAME` noch nicht. Trim steht dort noch unter ⚙ allgemein. Die neue LaTeX-Anleitung für Studierende deckt beides ab. Kapitel 7.1 der Word-Anleitung („an das MakerSpace-Team wenden“) passt nicht mehr, weil die Studierenden jetzt selbst flashen.
-- [ ] **Fotos für die LaTeX-Anleitung:** noch 2 (`foto_esp32_usb.png`, `foto_servo_kicker.png`), Liste in `WS26_27/Anleitung/LaTeX/bilder/eigene/Bilder_liste.md`.
+- [x] **Bilder für die LaTeX-Anleitung:** erledigt. Die Fotos sind durch Zeichnungen ersetzt.
+- [ ] **Widerspruch Servo-Versorgung:** Word-Anleitung 7.5 sagt „Servos brauchen eine eigene 5-V-Versorgung“, die LaTeX-Anleitung schließt den SG90 an VIN an. Nach dem Hardwaretest eine Variante festlegen und beide Anleitungen angleichen.
+- [ ] **Aushang (QR):** nennt noch „Projekt Maschinenbau“ statt „TRAIL – Projektwoche Maschinenbau“ und „Fragen: MakerSpace-Team“.
 - [ ] **Servo am echten Auto:** Reicht VIN (Powerbank-USB) für den SG90, ohne dass der ESP32 beim Schuss neu startet?
 - [ ] **Laptops der Studierenden:** Installation (ESP32-Paket mehrere 100 MB) vorab als Aufgabe ausgeben oder USB-Stick vorbereiten. Fork + Pages einmal mit einem Test-Account durchspielen.
 - [x] **Deckblatt der Anleitung:** aktualisiert am 13.11.2026 (TRAIL, Richert, Luderich, WS 2026/27).

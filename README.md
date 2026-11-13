@@ -1,4 +1,9 @@
 # RoboCar Steuerung per Handy (Bluetooth LE) – WS26/27
+
+> **Für Studierende:** Alle Anleitungen liegen im Ordner **[anleitungen/](anleitungen/)**.
+> Die Firmware zum Selbst-Aufspielen bekommen Sie über den grünen Knopf **Code ▸ Download ZIP** (ohne Konto).
+> Wie es weitergeht, steht in `anleitungen/2_Programm_anpassen_und_flashen.pdf`, Kapitel 2, 4 und 5.
+
 **Entwicklungsnotizen** (Entscheidungen, Verlauf, offene Punkte): [ENTWICKLUNG.md](ENTWICKLUNG.md)
 
 **App:** https://stberman.github.io/robocar-steuerung/  ·  Demo ohne Auto: https://stberman.github.io/robocar-steuerung/?demo
@@ -13,6 +18,7 @@ Raspberry Pis, WLAN-Access-Point, MQTT-Broker und USB-Gamepads aus WS25/26 (`WS2
 
 | Ordner | Inhalt |
 |---|---|
+| `anleitungen/` | PDF-Anleitungen für Studierende (Aufbau, Programm anpassen und flashen, Aushang). Kopien aus dem Teams-Ordner, aktualisieren mit `WS26_27/Anleitung/anleitungen_verteilen.ps1` |
 | `firmware/RoboCar_BLE/` | Arduino-Sketch für den ESP32 (identisch für alle Autos) |
 | `docs/` | Web-App (HTML/CSS/JS). Läuft im Browser und lässt sich als App installieren |
 | `beispiele/` | Fertige `aux_user.cpp`-Varianten aus der Studierenden-Anleitung (Servo-Kicker mit Automatik, Servo per Schieber). Inhalt bei Bedarf komplett nach `firmware/RoboCar_BLE/aux_user.cpp` kopieren |
