@@ -113,11 +113,10 @@ Stand: 10.11.2026 · Firmware 1.1 · App-Cache `robocar-v4`
 ## 8. Offene Punkte
 
 - [ ] **Hardwaretests:** Checkliste in README Abschnitt 8 (Failsafe, 8 Autos gleichzeitig, Android + iPhone/Bluefy, Boot-Test). Alles bisher nur kompiliert und im Demo-Modus geprüft, **nicht** am echten Auto.
-- [ ] **Anleitung nachziehen:** Anleitung v4 und `Anleitung_Kapitel_Steuerung.md` kennen den Reiter „Kalibrieren“ und `AUTO_NAME` noch nicht. Trim steht dort noch unter ⚙ allgemein. Die neue LaTeX-Anleitung für Studierende deckt beides ab. Kapitel 7.1 der Word-Anleitung („an das MakerSpace-Team wenden“) passt nicht mehr, weil die Studierenden jetzt selbst flashen.
+- [ ] **Anleitung nachziehen:** Anleitung v4 und `Anleitung_Kapitel_Steuerung.md` kennen den Reiter „Kalibrieren“ und `AUTO_NAME` noch nicht. Trim steht dort noch unter ⚙ allgemein. Die neue LaTeX-Anleitung für Studierende deckt beides ab. (Der MakerSpace-Satz zum Flashen ist erledigt.)
 - [x] **Bilder für die LaTeX-Anleitung:** erledigt. Die Fotos sind durch Zeichnungen ersetzt.
-- [ ] **Widerspruch Servo-Versorgung:** Word-Anleitung 7.5 sagt „Servos brauchen eine eigene 5-V-Versorgung“, die LaTeX-Anleitung schließt den SG90 an VIN an. Nach dem Hardwaretest eine Variante festlegen und beide Anleitungen angleichen.
-- [ ] **Aushang (QR):** nennt noch „Projekt Maschinenbau“ statt „TRAIL – Projektwoche Maschinenbau“ und „Fragen: MakerSpace-Team“.
-- [ ] **Servo am echten Auto:** Reicht VIN (Powerbank-USB) für den SG90, ohne dass der ESP32 beim Schuss neu startet?
+- [x] **Servo-Versorgung (13.11.2026) entschieden:** Step-down-Modul **HW-411 (LM2596, einstellbar, Amazon B0B5GQTS64)**. Eingang über Wago-Klemmen am Akku hinter dem Schalter, parallel zum L298N. Ausgang mit Multimeter auf 5,0 V einstellen, **bevor** der Servo angeschlossen wird. OUT− mit ESP32-GND verbinden, Signal an D4. Nicht mehr über VIN. Die LaTeX-Anleitung (Kap. 8.2, neue Verdrahtungsgrafik, Fehlersuche, Spickzettel), die Betreuer-Doku und die Word-Anleitung 8.5 sind angepasst. Der Aushang bleibt bewusst unverändert (Nutzerentscheidung).
+- [ ] **Servo am echten Auto:** Mit Step-down testen: kein Reset beim Schuss, Servo bekommt 5 V. Die Betreuenden prüfen die 5,0-V-Einstellung, bevor der Servo das erste Mal angeschlossen wird.
 - [ ] **Laptops der Studierenden:** Installation (ESP32-Paket mehrere 100 MB) vorab als Aufgabe ausgeben oder USB-Stick vorbereiten. Fork + Pages einmal mit einem Test-Account durchspielen.
 - [x] **Deckblatt der Anleitung:** aktualisiert am 13.11.2026 (TRAIL, Richert, Luderich, WS 2026/27).
 - [ ] **Motoren und Treiber:**
