@@ -15,6 +15,7 @@ Raspberry Pis, WLAN-Access-Point, MQTT-Broker und USB-Gamepads aus WS25/26 (`WS2
 |---|---|
 | `firmware/RoboCar_BLE/` | Arduino-Sketch für den ESP32 (identisch für alle Autos) |
 | `docs/` | Web-App (HTML/CSS/JS). Läuft im Browser und lässt sich als App installieren |
+| `beispiele/` | Fertige `aux_user.cpp`-Varianten aus der Studierenden-Anleitung (Servo-Kicker mit Automatik, Servo per Schieber). Inhalt bei Bedarf komplett nach `firmware/RoboCar_BLE/aux_user.cpp` kopieren |
 
 ---
 

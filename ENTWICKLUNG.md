@@ -101,15 +101,20 @@ Stand: 10.11.2026 · Firmware 1.1 · App-Cache `robocar-v4`
   - `userLoop()` läuft auch im Failsafe. Bewegliche Teile deshalb in `onFailsafe()` sichern (in der Anleitung beschrieben).
   - Gamecontroller-Tasten A/B/X/Y wirken auch bei Art `schalter` wie ein Taster (bekannte Eigenheit, nicht behoben).
   - Auf dem DevKit V1 sind GPIO 16/17 als RX2/TX2 beschriftet (in der Anleitung hervorgehoben).
+- **Verteilung an die Studierenden und Layout (13.11.2026):**
+  - Die Studierenden laden **alles als ZIP von GitHub** (Code ▸ Download ZIP, kein Konto nötig) und entpacken nach `C:\RoboCar`. Das erklärt Kapitel 2 der LaTeX-Anleitung ausführlich. Die PDF-Anleitung kommt über die Betreuenden bzw. ILIAS.
+  - Neuer Ordner `beispiele/` mit den Lösungen zum Servo-Kapitel, damit sie in der ZIP sind. Er liegt bewusst **nicht** im Sketch-Ordner, weil die IDE sonst alle `.cpp` mitübersetzt (doppelte Funktionen). Die Dateien sind identisch mit `WS26_27/Anleitung/LaTeX/code/`.
+  - LaTeX-Anleitungen auf das Layout der offiziellen TH-Köln-Vorlage umgestellt. Deckblatt: Modul „TRAIL – Projektwoche Maschinenbau“, Modulverantwortliche Prof. Dr. phil. Anja Richert, verantwortlich für die Projektwoche Prof. Dr. Jörg Luderich. Das Word-Deckblatt v4 hat dieselben Angaben.
+  - 13 Screenshots mit Markierungen eingebaut. Es fehlen nur noch zwei Fotos vom Auto.
 
 ## 8. Offene Punkte
 
 - [ ] **Hardwaretests:** Checkliste in README Abschnitt 8 (Failsafe, 8 Autos gleichzeitig, Android + iPhone/Bluefy, Boot-Test). Alles bisher nur kompiliert und im Demo-Modus geprüft, **nicht** am echten Auto.
 - [ ] **Anleitung nachziehen:** Anleitung v4 und `Anleitung_Kapitel_Steuerung.md` kennen den Reiter „Kalibrieren“ und `AUTO_NAME` noch nicht. Trim steht dort noch unter ⚙ allgemein. Die neue LaTeX-Anleitung für Studierende deckt beides ab. Kapitel 7.1 der Word-Anleitung („an das MakerSpace-Team wenden“) passt nicht mehr, weil die Studierenden jetzt selbst flashen.
-- [ ] **Screenshots/Fotos für die LaTeX-Anleitung:** 14 Platzhalter, Liste in `WS26_27/Anleitung/LaTeX/README.md`.
+- [ ] **Fotos für die LaTeX-Anleitung:** noch 2 (`foto_esp32_usb.png`, `foto_servo_kicker.png`), Liste in `WS26_27/Anleitung/LaTeX/bilder/eigene/Bilder_liste.md`.
 - [ ] **Servo am echten Auto:** Reicht VIN (Powerbank-USB) für den SG90, ohne dass der ESP32 beim Schuss neu startet?
 - [ ] **Laptops der Studierenden:** Installation (ESP32-Paket mehrere 100 MB) vorab als Aufgabe ausgeben oder USB-Stick vorbereiten. Fork + Pages einmal mit einem Test-Account durchspielen.
-- [ ] **Deckblatt der Anleitung:** steht noch auf „Ort, 26.11.2023“.
+- [x] **Deckblatt der Anleitung:** aktualisiert am 13.11.2026 (TRAIL, Richert, Luderich, WS 2026/27).
 - [ ] **Motoren und Treiber:**
   - Gemessen: bei 100 % ca. **9,6 V** an den Motoren. Der L298N verliert je nach Strom ca. 2–4 V.
   - Motortyp und Nennspannung sind nicht dokumentiert (keine TT-Gelbmotoren), ebenso die Akkuspannung am L298N.
